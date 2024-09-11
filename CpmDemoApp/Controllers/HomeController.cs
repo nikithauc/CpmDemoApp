@@ -29,12 +29,12 @@ namespace CpmDemoApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string Phone_Number, string Message, string Image)
+        public async Task<IActionResult> Index(string Phone_Number, string Message)
         {
-            if (string.IsNullOrWhiteSpace(Phone_Number) 
-                || (string.IsNullOrWhiteSpace(Message) && string.IsNullOrWhiteSpace(Image)))
+            if (string.IsNullOrWhiteSpace(Phone_Number)
+                || (string.IsNullOrWhiteSpace(Message)))
             {
-                Messages.MessagesListStatic.Add(new Message
+                LiveChat.MessagesListStatic.Add(new Message
                 {
                     Text = "Please make sure you have put down phone number and either a text message or an image url.",
                 });
@@ -45,36 +45,23 @@ namespace CpmDemoApp.Controllers
 
             try
             {
-                if (Image != null)
+                var textContent = new TextNotificationContent(_channelRegistrationId, recipientList, Message);
+                await _notificationMessagesClient.SendAsync(textContent);
+                LiveChat.MessagesListStatic.Add(new Message
                 {
-                    var mediaContext = new MediaNotificationContent(_channelRegistrationId, recipientList, new Uri(Image));
-                    await _notificationMessagesClient.SendAsync(mediaContext); 
-                    Messages.MessagesListStatic.Add(new Message
-                    {
-                        Text = $"Sent a image to \"{Phone_Number}\": ",
-                        Image = Image
-                    });
-                }
-                else
-                {
-                    var textContent = new TextNotificationContent(_channelRegistrationId, recipientList, Message);
-                    await _notificationMessagesClient.SendAsync(textContent);
-                    Messages.MessagesListStatic.Add(new Message
-                    {
-                        Text = $"Sent a message to \"{Phone_Number}\": \"{Message}\""
-                    });
-                }
+                    Text = $"Sent a message to \"{Phone_Number}\": \"{Message}\""
+                });
+                
             }
             catch (RequestFailedException e)
             {
-                Messages.MessagesListStatic.Add(new Message
+                LiveChat.MessagesListStatic.Add(new Message
                 {
                     Text = $"Message \"{Message}\" to \"{Phone_Number}\" failed. Exception: {e.Message}"
                 });
             }
                    
             ModelState.Remove(nameof(Message));
-            ModelState.Remove(nameof(Image));
 
             return View();
         }
@@ -82,14 +69,7 @@ namespace CpmDemoApp.Controllers
         [HttpPost]
         public IActionResult MessagesList()
         {
-            return PartialView();
-        }
-
-        [HttpPost]
-        public IActionResult ClearHistory()
-        {
-            Messages.MessagesListStatic = new List<Message>();
-            return RedirectToAction("Index");
+            return PartialView("ChatWindow");
         }
     }
 }

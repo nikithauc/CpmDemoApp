@@ -1,0 +1,15 @@
+﻿<div class="chat-header">
+    Chat Conversation
+</div>
+<div class="chat-messages">
+    @if (LiveChat.MessagesListStatic != null && LiveChat.MessagesListStatic.Any())
+    {
+        @foreach (var message in LiveChat.MessagesListStatic)
+        {
+            <div class="@(message.IsFromReceiver? "message user": "message assistant")">
+                <div class="text">@message.Text</div>
+            </div>
+        }
+    }     
+</div>
+  

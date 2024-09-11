@@ -82,14 +82,16 @@ namespace viewer.Controllers
                     case "microsoft.communication.advancedmessagereceived":
                         var messageReceivedEventData = JsonSerializer.Deserialize<CrossPlatformMessageReceivedEventData>(eventGridEvent.Data.ToString(), _options);
 
-                        Messages.MessagesListStatic.Add(new Message
+                        LiveChat.MessagesListStatic.Add(new Message
                         {
-                            Text = $"Received message from \"{messageReceivedEventData.From}\": \"{messageReceivedEventData.Content}\""
+                            Text = $"Received message from \"{messageReceivedEventData.From}\": \"{messageReceivedEventData.Content}\"",
+                            IsFromReceiver = true,
+                            
                         });
                         break;
                     case "microsoft.communication.advancedmessageanalysiscompleted":
                         var messageAnalysisEventData = JsonSerializer.Deserialize<AdvancedMessageAnalysisCompletedEventData>(eventGridEvent.Data.ToString(), _options);
-                        Messages.MessagesListStatic.Add(new Message
+                        LiveChat.MessagesListStatic.Add(new Message
                         {
                             Analysis = messageAnalysisEventData
                         });

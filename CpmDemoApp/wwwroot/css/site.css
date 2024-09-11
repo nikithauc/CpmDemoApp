@@ -20,3 +20,108 @@ body {
 td:nth-child(even), th:nth-child(even) {
     background-color: rgba(150, 212, 212, 0.4);
 }
+
+.sidebar {
+    height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+}
+
+.email-list {
+    padding: 20px;
+}
+
+.email-group {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    padding: 10px;
+    border-color: lightgrey;
+}
+
+.email-item {
+    padding: 10px;
+    border-bottom: 1px solid #ccc;
+    border-radius: 10px;
+    border-color: lightgrey;
+}
+
+header {
+    background-color: #e9ffdb;
+    padding: 20px;
+    text-align: left;
+    font-size: 24px;
+    color: black;
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+.chat-messages {
+    padding: 20px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.message {
+    margin-bottom: 15px;
+}
+
+    .message.user {
+        text-align: right;
+    }
+
+    .message .text {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 70%;
+    }
+
+    .message.user .text {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .message.assistant .text {
+        background-color: #e9ecef;
+        color: #333;
+    }
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 20px;
+        cursor: pointer;
+    }

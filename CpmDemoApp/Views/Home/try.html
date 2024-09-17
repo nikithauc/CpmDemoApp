@@ -1,12 +1,18 @@
-﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Inbox</title>
+</head>
 <body>
     <div class="filter-container">
-        @* <label for="userFilter">Filter by User:</label>
+        <label for="userFilter">Filter by User:</label>
         <input type="text" id="userFilter" oninput="filterEmails()">
         <label for="dateFilter">Filter by Date:</label>
         <input type="date" id="dateFilter" oninput="filterEmails()">
         <label for="customFilter">Custom Filter:</label>
-        <input type="text" id="customFilter" oninput="filterEmails()"> *@
+        <input type="text" id="customFilter" oninput="filterEmails()">
         <label for="typeFilter">Filter by Type:</label>
         <select id="typeFilter" onchange="filterEmails()">
             <option value="">All</option>
@@ -17,8 +23,38 @@
     <div id="inbox"></div>
 
     <script type="text/javascript">
-        var emails = JSON.parse('@Html.Raw(Json.Serialize(LiveChat.InboxListStatic))');
-        console.log(emails);
+        var emails = [
+            {
+                "arrivalTime": "2024-09-16T14:54:33.7633808-07:00",
+                "message": {
+                    "isFromReceiver": false,
+                    "text": "hello",
+                    "analysis": null
+                },
+                "analysisKeyword": "order",
+                "conversationId": "123"
+            },
+            {
+                "arrivalTime": "2024-09-14T14:54:33.8313336-07:00",
+                "message": {
+                    "isFromReceiver": false,
+                    "text": "hello",
+                    "analysis": null
+                },
+                "analysisKeyword": "reviews",
+                "conversationId": "345"
+            },
+            {
+                "arrivalTime": "2024-09-12T14:54:33.8547341-07:00",
+                "message": {
+                    "isFromReceiver": false,
+                    "text": "hello there",
+                    "analysis": null
+                },
+                "analysisKeyword": "reviews",
+                "conversationId": "335"
+            }
+        ];
 
         function groupEmailsByDate(emails) {
             return emails.reduce((groups, email) => {
@@ -39,7 +75,7 @@
                 const emailGroup = document.createElement('div');
                 emailGroup.className = 'email-group';
                 const dateHeader = document.createElement('h3');
-                dateHeader.textContent = dateFormat(date);
+                dateHeader.textContent = date;
                 emailGroup.appendChild(dateHeader);
                 groupedEmails[date].forEach(email => {
                     const emailItem = document.createElement('div');
@@ -51,26 +87,16 @@
             }
         }
 
-        function dateFormat(dateStr) {
-            const date = new Date(dateStr);
-
-            const options = { year: 'numeric', month: 'short', day: '2-digit' };
-            const formattedDate = date.toLocaleDateString('en-US', options);
-
-            console.log(formattedDate); // Output: "Sep 12, 2024"
-            return formattedDate;
-        }
-
         function filterEmails() {
-            // const userFilter = document.getElementById('userFilter').value.toLowerCase();
-            // const dateFilter = document.getElementById('dateFilter').value;
-            // const customFilter = document.getElementById('customFilter').value.toLowerCase();
+            const userFilter = document.getElementById('userFilter').value.toLowerCase();
+            const dateFilter = document.getElementById('dateFilter').value;
+            const customFilter = document.getElementById('customFilter').value.toLowerCase();
             const typeFilter = document.getElementById('typeFilter').value;
             const filteredEmails = emails.filter(email => {
                 return (
-                    // (!userFilter || email.message.text.toLowerCase().includes(userFilter)) &&
-                    // (!dateFilter || email.arrivalTime.split('T') === dateFilter) &&
-                    // (!customFilter || email.message.text.toLowerCase().includes(customFilter) || email.analysisKeyword.toLowerCase().includes(customFilter)) &&
+                    (!userFilter || email.message.text.toLowerCase().includes(userFilter)) &&
+                    (!dateFilter || email.arrivalTime.split('T') === dateFilter) &&
+                    (!customFilter || email.message.text.toLowerCase().includes(customFilter) || email.analysisKeyword.toLowerCase().includes(customFilter)) &&
                     (!typeFilter || email.analysisKeyword === typeFilter)
                 );
             });
@@ -81,6 +107,4 @@
         displayEmails(emails);
     </script>
 </body>
-
-
- 
+</html>

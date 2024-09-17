@@ -125,3 +125,17 @@ header {
         border-radius: 20px;
         cursor: pointer;
     }
+
+.filter-container {
+    margin-bottom: 20px;
+}
+
+.email-group {
+    margin-bottom: 20px;
+}
+
+.email-item {
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin-bottom: 10px;
+}

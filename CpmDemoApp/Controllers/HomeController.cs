@@ -1,8 +1,7 @@
-﻿using Azure.Communication.Messages;
+﻿using Azure;
+using Azure.Communication.Messages;
 using CpmDemoApp.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using Azure;
 using Microsoft.Extensions.Options;
 
 namespace CpmDemoApp.Controllers
@@ -29,9 +28,9 @@ namespace CpmDemoApp.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Index(string Phone_Number, string Message)
+        public async Task<IActionResult> Index(string Message)
         {
-            if (string.IsNullOrWhiteSpace(Phone_Number)
+            if (string.IsNullOrWhiteSpace(LiveChat.CurrentPhoneNumber)
                 || (string.IsNullOrWhiteSpace(Message)))
             {
                 LiveChat.MessagesListStatic.Add(new Message
@@ -41,7 +40,7 @@ namespace CpmDemoApp.Controllers
                 return View();
             }
 
-            var recipientList = new List<string> { Phone_Number };
+            var recipientList = new List<string> { LiveChat.CurrentPhoneNumber };
 
             try
             {
@@ -49,7 +48,7 @@ namespace CpmDemoApp.Controllers
                 await _notificationMessagesClient.SendAsync(textContent);
                 LiveChat.MessagesListStatic.Add(new Message
                 {
-                    Text = $"Sent a message to \"{Phone_Number}\": \"{Message}\""
+                    Text = $"Sent a message to \"{LiveChat.CurrentPhoneNumber}\": \"{Message}\""
                 });
                 
             }
@@ -57,7 +56,7 @@ namespace CpmDemoApp.Controllers
             {
                 LiveChat.MessagesListStatic.Add(new Message
                 {
-                    Text = $"Message \"{Message}\" to \"{Phone_Number}\" failed. Exception: {e.Message}"
+                    Text = $"Message \"{Message}\" to \"{LiveChat.CurrentPhoneNumber}\" failed. Exception: {e.Message}"
                 });
             }
                    

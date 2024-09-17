@@ -81,13 +81,28 @@ namespace viewer.Controllers
                 {
                     case "microsoft.communication.advancedmessagereceived":
                         var messageReceivedEventData = JsonSerializer.Deserialize<CrossPlatformMessageReceivedEventData>(eventGridEvent.Data.ToString(), _options);
-
+                       
                         LiveChat.MessagesListStatic.Add(new Message
                         {
-                            Text = $"Received message from \"{messageReceivedEventData.From}\": \"{messageReceivedEventData.Content}\"",
+                            Text = $"{messageReceivedEventData?.Content}",
                             IsFromReceiver = true,
-                            
+
                         });
+
+                        if (LiveChat.CurrentPhoneNumber == messageReceivedEventData.From)
+                        {
+                            LiveChat.MessagesListStatic.Add(new Message
+                            {
+                                Text = $"{messageReceivedEventData?.Content}",
+                                IsFromReceiver = true,
+
+                            });
+                        }
+                        else 
+                        {
+                            // store the message in thread?
+                        }
+                        
                         break;
                     case "microsoft.communication.advancedmessageanalysiscompleted":
                         var messageAnalysisEventData = JsonSerializer.Deserialize<AdvancedMessageAnalysisCompletedEventData>(eventGridEvent.Data.ToString(), _options);

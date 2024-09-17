@@ -12,6 +12,76 @@
             padding: 0;
         }
         
+        .chat-container {
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+}
+
+.chat-header {
+    background-color: #007bff;
+    color: #fff;
+    padding: 15px;
+    text-align: center;
+}
+
+.chat-messages {
+    padding: 20px;
+    height: 400px;
+    overflow-y: scroll;
+}
+
+.message {
+    margin-bottom: 15px;
+}
+
+    .message.user {
+        text-align: right;
+    }
+
+    .message .text {
+        display: inline-block;
+        padding: 10px 15px;
+        border-radius: 20px;
+        max-width: 70%;
+    }
+
+    .message.user .text {
+        background-color: #007bff;
+        color: #fff;
+    }
+
+    .message.assistant .text {
+        background-color: #e9ecef;
+        color: #333;
+    }
+
+.chat-input {
+    display: flex;
+    padding: 15px;
+    border-top: 1px solid #ddd;
+}
+
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        margin-right: 10px;
+    }
+
+    .btn-primary {
+        padding: 10px 20px;
+        border: none;
+        background-color: #007bff;
+        color: #fff;
+        border-radius: 20px;
+        cursor: pointer;
+    }
     </style>
 </head>
 <body>
@@ -19,7 +89,7 @@
         <div class="chat-header">
             Chat Conversation
         </div>
-        <div class="chat-messages">
+        <div class="chat-messages" id="scrollable-div">
             <div class="message user">
                 <div class="text">Hi, how are you?</div>
             </div>
@@ -39,4 +109,22 @@
         </div>
     </div>
 </body>
+<script>
+    function refreshContent() {
+        var scrollableDiv = document.getElementById('scrollable-div');
+        var scrollPosition = scrollableDiv.scrollTop;
+        console.log('Scroll position: ' + scrollPosition);
+        // Create a new child div
+        var newChildDiv = document.createElement('div');
+        newChildDiv.innerHTML = '<p>New content loaded at ' + new Date().toLocaleTimeString() + '</p>';
+       
+         // Append the new child div to the scrollable-div
+         scrollableDiv.appendChild(newChildDiv);
+        // Restore scroll position
+        scrollableDiv.scrollTop = scrollPosition;
+    }
+
+    // Refresh content every 10 seconds
+    setInterval(refreshContent, 1000);
+</script>
 </html>

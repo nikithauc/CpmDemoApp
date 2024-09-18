@@ -1,0 +1,36 @@
+﻿@model List<CpmDemoApp.Models.Conversation>
+
+@{
+    ViewBag.Title = "Conversations";
+}
+
+<h2>Conversations</h2>
+
+<table>
+    <thead>
+        <tr> 
+            <th>Phone Number</th>
+            <th>Message</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var conversation in Model)
+        {
+            <tr>
+                <td>@conversation.Id </td>
+                <td>@conversation.IncomingMessage.From</td>
+                <td>
+                    <form method="post" action="/conversation/delete">
+                        <input type="hidden" name="id" value="@conversation.Id" />
+                        <button type="submit">Delete</button>
+                    </form>
+                    <form method="post" action="/conversation/update">
+                        <input type="hidden" name="id" value="@conversation.Id" />
+                        <button type="submit">Update</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

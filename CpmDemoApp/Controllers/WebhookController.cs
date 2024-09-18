@@ -75,46 +75,46 @@ namespace viewer.Controllers
         private async Task<IActionResult> HandleGridEvents(string jsonContent)
         {
             var eventGridEvents = JsonSerializer.Deserialize<EventGridEvent[]>(jsonContent, _options);
-            foreach (var eventGridEvent in eventGridEvents)
-            {
-                switch (eventGridEvent.EventType.ToLower())
-                {
-                    case "microsoft.communication.advancedmessagereceived":
-                        var messageReceivedEventData = JsonSerializer.Deserialize<CrossPlatformMessageReceivedEventData>(eventGridEvent.Data.ToString(), _options);
+            //foreach (var eventGridEvent in eventGridEvents)
+            //{
+            //    switch (eventGridEvent.EventType.ToLower())
+            //    {
+            //        case "microsoft.communication.advancedmessagereceived":
+            //            var messageReceivedEventData = JsonSerializer.Deserialize<CrossPlatformMessageReceivedEventData>(eventGridEvent.Data.ToString(), _options);
                        
-                        LiveChat.MessagesListStatic.Add(new Message
-                        {
-                            Text = $"{messageReceivedEventData?.Content}",
-                            IsFromReceiver = true,
+            //            LiveChat.MessagesListStatic.Add(new Message
+            //            {
+            //                Text = $"{messageReceivedEventData?.Content}",
+            //                IsFromReceiver = true,
 
-                        });
+            //            });
 
-                        if (LiveChat.CurrentPhoneNumber == messageReceivedEventData.From)
-                        {
-                            LiveChat.MessagesListStatic.Add(new Message
-                            {
-                                Text = $"{messageReceivedEventData?.Content}",
-                                IsFromReceiver = true,
+            //            if (LiveChat.CurrentPhoneNumber == messageReceivedEventData.From)
+            //            {
+            //                LiveChat.MessagesListStatic.Add(new Message
+            //                {
+            //                    Text = $"{messageReceivedEventData?.Content}",
+            //                    IsFromReceiver = true,
 
-                            });
-                        }
-                        else 
-                        {
-                            // store the message in thread?
-                        }
+            //                });
+            //            }
+            //            else 
+            //            {
+            //                // store the message in thread?
+            //            }
                         
-                        break;
-                    case "microsoft.communication.advancedmessageanalysiscompleted":
-                        var messageAnalysisEventData = JsonSerializer.Deserialize<AdvancedMessageAnalysisCompletedEventData>(eventGridEvent.Data.ToString(), _options);
-                        LiveChat.MessagesListStatic.Add(new Message
-                        {
-                            Analysis = messageAnalysisEventData
-                        });
-                        break;
-                    default:
-                        break;
-                }
-            }
+            //            break;
+            //        case "microsoft.communication.advancedmessageanalysiscompleted":
+            //            var messageAnalysisEventData = JsonSerializer.Deserialize<AdvancedMessageAnalysisCompletedEventData>(eventGridEvent.Data.ToString(), _options);
+            //            LiveChat.MessagesListStatic.Add(new Message
+            //            {
+            //                Analysis = messageAnalysisEventData
+            //            });
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
 
             return Ok();
         }

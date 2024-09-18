@@ -2,8 +2,7 @@
 
 namespace CpmDemoApp.Controllers
 {
-    [Route("inbox")]
-    public class InboxController : Controller
+    public class EmployeePortalController : Controller
     {
         public IActionResult Index()
         {

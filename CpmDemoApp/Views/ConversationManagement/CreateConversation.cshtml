@@ -1,0 +1,29 @@
+﻿@model CpmDemoApp.Models.Conversation
+
+@{
+    ViewBag.Title = "Create Conversation";
+}
+
+<h2>Create Conversation</h2>
+
+<form method="post" action="/Conversation/Create">
+    <div>
+        <label for="phoneNumber">Phone Number:</label>
+        <input type="text" id="phoneNumber" name="phoneNumber" value="@Model.IncomingMessage.From" />
+    </div>
+    <div>
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message" value="@Model.IncomingMessage.MessageContent" />
+    </div>
+    <div>
+        <label>Agents:</label>
+        @foreach (var agent in LiveChat.AgentLists)
+        {
+            <div>
+                <input type="checkbox" name="SelectedAgentIds" value="@agent.Id" />
+                <label>@agent.Name</label>
+            </div>
+        }
+    </div>
+    <button type="submit">Submit</button>
+</form>

@@ -1,0 +1,28 @@
+﻿@model CpmDemoApp.Models.Conversation
+@{
+    ViewBag.Title = "Customer Conversation";
+}
+<div class="chat-header">
+    Customer Conversation
+</div>
+<div>
+    @if (@Model.Messages != null && @Model.Messages.Any())
+    {
+        @foreach (var message in Model.Messages)
+        {
+            <div class="@(message.IsSender? "message user": "message assistant")">
+                <div class="text">@message.From <br /> @message.MessageContent</div>
+            </div>
+        }
+    }      
+</div>
+
+<form method="post" action="/EmployeePortal/SendMessage">
+    <input type="hidden" name="id" value="@Model.Id" />
+    <input type="hidden" name="agentId" value="@Model.Id" /> 
+    <div>
+        <label for="message">Message:</label>
+        <input type="text" id="message" name="message"/>
+    </div>
+    <button type="submit">Submit</button>
+</form>

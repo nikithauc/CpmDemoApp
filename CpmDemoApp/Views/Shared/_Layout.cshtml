@@ -3,14 +3,14 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Message Analysis Demo App</title>
+    <title>@ViewData["Title"] - Flower Shop Demo App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/CpmDemoApp.styles.css" asp-append-version="true" />
 </head>
 <body>
     <header>
-        Welcome to My Website
+        Blossom Flower Studio
     </header>
     <div class="container-fluid">
         <div class="row">
@@ -22,12 +22,12 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="@Url.Action("List", "Home")">
-                            Admin: List Conversations
+                        <a href="@Url.Action("List", "ConversationManagement")">
+                            Admin: List All Conversations
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a href="@Url.Action("List", "Home")">
+                        <a href="@Url.Action("List", "EmployeePortal")">
                             Agent: List My Conversations
                         </a>
                     </li>
@@ -40,7 +40,7 @@
     </div>
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2024 - Message Analysis Demo App
+            &copy; 2024 - Flower Shop Demo App
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

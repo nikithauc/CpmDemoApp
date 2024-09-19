@@ -1,0 +1,68 @@
+﻿@{  
+    ViewBag.Title = "Home Page";  
+}  
+
+<script>
+    function loadPartialView() {
+        $.ajax({
+            url: "@Url.Action("MessagesList", "Home")",
+            type: 'POST',
+            dataType: 'html',
+            cache: false,
+            success: function (html) {
+                $("#partialContainer").html(html);
+            }
+        });
+    }
+    function RefreshPartial() {
+        //this will wait 1 seconds and then fire the load partial function
+        var scrollableDiv = document.getElementById('scrollable-div');
+        var scrollPosition = scrollableDiv.scrollTop;
+        console.log('Scroll position: ' + scrollPosition);
+        loadPartialView();
+        // Restore scroll position
+        scrollableDiv.scrollTop = scrollPosition;
+        
+
+    }
+    setInterval(RefreshPartial, 1000);
+    //initialize the loop
+    //RefreshPartial();
+</script>
+<br>
+<div class="container">
+    <div class="row">
+        <div class="col-md-6" id="messageHistoryPanel">
+            <div style="border:dotted; height: 600px; overflow: auto">
+                <div>
+                    @Html.Partial("Inbox")
+                </div>
+            </div>
+        </div>
+        <div id="chatPanel" class="col-md-6">
+            <div class="p-3 border bg-light">
+                <div class="chat-container">
+                    <div id="partialContainer">
+                        @Html.Partial("ChatWindow")
+                    </div>
+                    @using (Html.BeginForm("Index", "Home", FormMethod.Post))
+                    {
+                        <div class="chat-input">
+                            @* @Html.TextBox("Phone_Number") *@
+                            @Html.TextBox("Message")
+                            <input type="submit" value="Send" class="btn-primary" />
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<br>
+
+<script>
+    if ( window.history.replaceState ) {
+        window.history.replaceState( null, null, window.location.href );
+    }
+</script>

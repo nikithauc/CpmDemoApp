@@ -3,12 +3,52 @@
 @{
     ViewBag.Title = "Conversations";
 }
+<style>
+    td {
+    padding: 10px;
+    text-align: left;
+    vertical-align: middle;
+}
 
-<h2>Conversations</h2>
+form {
+    display: block;
+    margin-bottom: 10px;
+    background-color: white;
+    border:none:
+    float:left
+}
+
+.linkbutton {
+    background: none;
+    color: #007bff; /* Bootstrap primary color for links */
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.linkbutton:hover {
+    color: #0056b3; /* Darker blue on hover */
+}
+
+a {
+    display: block;
+    margin-bottom: 10px;
+    color: #007bff;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #0056b3;
+}
+</style>
+<h2 class = "titles">Conversations</h2>
 
 <table>
     <thead>
         <tr> 
+            <th>Conversation Id</th>
             <th>Phone Number</th>
             <th>Message</th>
             <th>Actions</th>
@@ -20,18 +60,15 @@
             <tr>
                 <td>@conversation.Id </td>
                 <td>@conversation.IncomingMessage.From</td>
+                <td>@conversation.IncomingMessage.MessageContent</td>
                 
                 <td>
                     <form method="post" action="/conversation/delete">
                         <input type="hidden" name="id" value="@conversation.Id" />
-                        <button type="submit">Delete</button>
+                        <button class="linkbutton" type="submit">Delete</button>
                     </form>
-                    <form method="post" action="/conversation/update">
-                        <input type="hidden" name="id" value="@conversation.Id" />
-                        <button type="submit">Update</button>
-                    </form>
-                    <a href="@Url.Action("AddPage", "ConversationManagement", new {id = conversation.Id})"> Add Agent </a>
-                    <a href="@Url.Action("Remove", "ConversationManagement", new {id = conversation.Id})"> Remove Agent </a>
+                    <a href="@Url.Action("AddEmployeePage", "ConversationManagement", new {id = conversation.Id})">Add Agent</a>
+                    <a href="@Url.Action("RemoveEmployeePage", "ConversationManagement", new {id = conversation.Id})">Remove Agent</a>
                 </td>
             </tr>
         }

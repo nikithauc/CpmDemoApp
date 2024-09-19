@@ -4,7 +4,7 @@
     ViewBag.Title = "Create Conversation";
 }
 
-<h2>Create Conversation</h2>
+<h2 class="titles">Create Conversation</h2>
 
 <form method="post" action="/Conversation/Create">
     <div>
@@ -21,7 +21,7 @@
         {
             <div>
                 <input type="checkbox" name="SelectedAgentIds" value="@agent.Id" />
-                <label>@agent.Name</label>
+                <label class="checkbox-label">@agent.Name</label>
             </div>
         }
     </div>

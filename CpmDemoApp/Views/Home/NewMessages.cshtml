@@ -1,4 +1,9 @@
-﻿<body>
+﻿@{
+    ViewBag.Title = "New Customer Messages";
+}
+<body>
+    <h2 class="titles">New Customer Messages</h2>
+
     <div class="filter-container">
         <label for="typeFilter">Filter by Intent:</label>
         <select id="typeFilter" onchange="filterIncomingMessages()">
@@ -52,9 +57,9 @@
                         .replace("__MESSAGECONTENT__", message.messageContent);
                     messageItem.innerHTML = `<a href="${url}">
                             From: ${message.customerPhoneNumber} <br>
-                            ${message.messageContent} <br>
+                            Message: ${message.messageContent} <br>
                             Analysis - ${message.analysisKeyword} <br>
-                            Intent Analysis - ${message.analysis.IntentAnalysis}
+                            Intent Analysis - ${message.analysis.intentAnalysis}
                         </a>`;
                     messageList.appendChild(messageItem);
                 });

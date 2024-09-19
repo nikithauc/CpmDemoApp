@@ -11,7 +11,7 @@ namespace CpmDemoApp.Models
             new NewIncomingMessage
             {
                 ArrivalTime = DateTime.Now,
-                MessageContent = "hello",
+                MessageContent = "How can I order more of the product?",
                 AnalysisKeyword = IntentAnalysisUtil.KeywordForIntentAnalysis(new AdvancedMessageAnalysisCompletedEventData
                     {
                         IntentAnalysis = ("Support Request: The customer is expressing satisfaction with the product and is requesting assistance to place an additional order."),
@@ -27,7 +27,7 @@ namespace CpmDemoApp.Models
             new NewIncomingMessage
             {
                 ArrivalTime = DateTime.Now.AddDays(-2),
-                MessageContent = "hello",
+                MessageContent = "Happy with the product",
                 AnalysisKeyword = IntentAnalysisUtil.KeywordForIntentAnalysis(new AdvancedMessageAnalysisCompletedEventData
                     {
                         IntentAnalysis = ("Positive feedback: The customer is expressing satisfaction with the product."),
@@ -43,7 +43,7 @@ namespace CpmDemoApp.Models
             new NewIncomingMessage
             {
                 ArrivalTime = DateTime.Now.AddDays(-2),
-                MessageContent = "hey",
+                MessageContent = "I am unhappy with the product",
                 AnalysisKeyword = IntentAnalysisUtil.KeywordForIntentAnalysis(new AdvancedMessageAnalysisCompletedEventData
                     {
                         IntentAnalysis = ("Complaint: The customer is expressing dissatisfaction with the product they received."),
@@ -70,8 +70,8 @@ namespace CpmDemoApp.Models
             new Agent { Id = "55", Name = "Agent5" },
         };
 
-        public static ConversationManagementClient ConversationManagementClient { get; set; } = new ConversationManagementClient("");
+        //public static ConversationManagementClient ConversationManagementClient { get; set; } = new ConversationManagementClient("endpoint=FakeEndpoint;accessKey=FakeAccess");
 
-        public static ConversationMessagesClient ConversationMessagesClient { get; set; } = new ConversationMessagesClient("");
+        //public static ConversationMessagesClient ConversationMessagesClient { get; set; } = new ConversationMessagesClient("endpoint=FakeEndpoint;accessKey=FakeAccess");
     }
 }

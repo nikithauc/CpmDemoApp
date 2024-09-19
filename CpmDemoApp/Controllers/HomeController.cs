@@ -24,7 +24,7 @@ namespace CpmDemoApp.Controllers
 
         public IActionResult Index()
         {
-            return View("NewMessages");
+            return View("Index");
         }
         public IActionResult NewIncomingMessages()
         {

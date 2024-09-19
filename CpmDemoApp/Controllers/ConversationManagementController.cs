@@ -22,8 +22,7 @@ namespace CpmDemoApp.Controllers
             var result = "";
             if (true) 
             {
-                result = "success";
-                result = "success";
+                result = "Successfully created the conversation. Coversation id is 123";
 
             }
             return View("Result", result);
@@ -55,39 +54,40 @@ namespace CpmDemoApp.Controllers
         }
 
         [Route("delete")]
-        [HttpDelete]
+        [HttpPost]
         public ActionResult Delete(string id)
         {
-            return View("List");
+            return View("Result", "Successfully Deleted");
         }
 
         [Route("update")]
         [HttpPost]
         public ActionResult Update(Conversation model)
         {
-            return RedirectToAction("Index");
+            return View("Result");
         }
 
-
-        public ActionResult AddPage(string id) 
+        [Route("AddEmployeePage")]
+        public ActionResult AddEmployeePage(string id) 
         {
-            return View("AddPage", id);
+            return View("AddEmployee", id);
         }
 
         [Route("AddEmployee")]
         [HttpPost]
         public async Task<ActionResult> AddEmployee(string id, List<string> SelectedAgentIds)
         {
-            var payload = new RemoveEmployeesRequestPayload();
+            //var payload = new RemoveEmployeesRequestPayload();
 
-            foreach (var id in AgentIds)
-            {
-            }
-            var result = await LiveChat.ConversationManagementClient.RemoveAsync("", payload);
-            return View("Result", "");
+            ////foreach (var id in AgentIds)
+            ////{
+            ////}
+            //var result = await LiveChat.ConversationManagementClient.RemoveAsync("", payload);
+            return View("Result", "Successfully added employee");
         }
 
-        public ActionResult RemovePage(string id)
+        [Route("RemoveEmployeePage")]
+        public ActionResult RemoveEmployeePage(string id)
         {
             var conversationModel = new Conversation()
             {
@@ -102,7 +102,7 @@ namespace CpmDemoApp.Controllers
         [HttpPost]
         public ActionResult RemoveEmployee(string id, List<string> SelectedAgentIds)
         {
-            return View("Result", "");
+            return View("Result", "Employee successfully Removed");
         }
     }
 }

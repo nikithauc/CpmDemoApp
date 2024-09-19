@@ -1,0 +1,23 @@
+﻿@model CpmDemoApp.Models.Conversation
+
+@{
+    ViewBag.Title = "Remove Employee";
+}
+
+<h2>Remove Employee</h2>
+
+<form method="post" action="/Conversation/RemoveEmployee">
+    
+    <div>
+        <input type="hidden" name="id" value="@Model" />
+        <label>Agents:</label>
+        @foreach (var agent in LiveChat.AgentLists)
+        {
+            <div>
+                <input type="checkbox" name="SelectedAgentIds" value="@agent.Id" />
+                <label>@agent.Name</label>
+            </div>
+        }
+    </div>
+    <button type="submit">Remove Selected</button>
+</form>

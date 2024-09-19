@@ -1,4 +1,5 @@
-﻿using CpmDemoApp.Util;
+﻿using Azure.Communication.Messages;
+using CpmDemoApp.Util;
 using System.Linq.Expressions;
 
 namespace CpmDemoApp.Models
@@ -41,7 +42,7 @@ namespace CpmDemoApp.Models
             },
             new NewIncomingMessage
             {
-                ArrivalTime = DateTime.Now.AddDays(-4),
+                ArrivalTime = DateTime.Now.AddDays(-2),
                 MessageContent = "hey",
                 AnalysisKeyword = IntentAnalysisUtil.KeywordForIntentAnalysis(new AdvancedMessageAnalysisCompletedEventData
                     {
@@ -68,5 +69,9 @@ namespace CpmDemoApp.Models
             new Agent { Id = "44", Name = "Agent4" },
             new Agent { Id = "55", Name = "Agent5" },
         };
+
+        public static ConversationManagementClient ConversationManagementClient { get; set; } = new ConversationManagementClient("");
+
+        public static ConversationMessagesClient ConversationMessagesClient { get; set; } = new ConversationMessagesClient("");
     }
 }

@@ -20,6 +20,7 @@
             <tr>
                 <td>@conversation.Id </td>
                 <td>@conversation.IncomingMessage.From</td>
+                
                 <td>
                     <form method="post" action="/conversation/delete">
                         <input type="hidden" name="id" value="@conversation.Id" />
@@ -29,6 +30,8 @@
                         <input type="hidden" name="id" value="@conversation.Id" />
                         <button type="submit">Update</button>
                     </form>
+                    <a href="@Url.Action("AddPage", "ConversationManagement", new {id = conversation.Id})"> Add Agent </a>
+                    <a href="@Url.Action("Remove", "ConversationManagement", new {id = conversation.Id})"> Remove Agent </a>
                 </td>
             </tr>
         }

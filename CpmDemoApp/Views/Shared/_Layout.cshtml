@@ -17,10 +17,19 @@
             <nav class="col-md-3 sidebar">
                 <ul class="nav flex-column">
                     <li class="nav-item">
-                        <a class="nav-link" href="#">MessageAnalysis</a>
+                        <a href="@Url.Action("NewIncomingMessages", "Home")">
+                            New Messages 
+                        </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">Conversations</a>
+                        <a href="@Url.Action("List", "Home")">
+                            Admin: List Conversations
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="@Url.Action("List", "Home")">
+                            Agent: List My Conversations
+                        </a>
                     </li>
                 </ul>
             </nav>

@@ -1,0 +1,24 @@
+﻿@model string
+
+@{
+    ViewBag.Title = "Add Employee";
+}
+
+<h2>Add Employee</h2>
+
+<form method="post" action="/Conversation/Create">
+   
+    <div>
+        <input type="hidden" name="id" value="@Model" />
+        <label>Agents:</label>
+        @foreach (var agent in LiveChat.AgentLists)
+        {
+            
+            <div>
+                <input type="checkbox" name="SelectedAgentIds" value="@agent.Id" />
+                <label>@agent.Name</label>
+            </div>
+        }
+    </div>
+    <button type="submit">Add Selected</button>
+</form>

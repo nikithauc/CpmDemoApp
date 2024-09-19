@@ -1,4 +1,5 @@
-﻿using CpmDemoApp.Models;
+﻿using Azure.Communication.Messages;
+using CpmDemoApp.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CpmDemoApp.Controllers
@@ -7,11 +8,10 @@ namespace CpmDemoApp.Controllers
     public class ConversationManagementController : Controller
     {
         [Route("createform")]
-        public ActionResult CreateForm()
-        {//string phoneNumber, string message
-
+        public ActionResult CreateForm(Message message)
+        {
             return View("CreateConversation", new Conversation {
-                IncomingMessage = new Message { From = "+12323", MessageContent = "hello message" }
+                IncomingMessage = message
             });
         }
 
@@ -19,11 +19,14 @@ namespace CpmDemoApp.Controllers
         [HttpPost]
         public ActionResult Create(Conversation model)
         {
-
-            return View("CreateConversation", new Conversation
+            var result = "";
+            if (true) 
             {
-                IncomingMessage = new Message { From = "+12323", MessageContent = "hello message" }
-            });
+                result = "success";
+                result = "success";
+
+            }
+            return View("Result", result);
         }
 
         [Route("list")]
@@ -65,18 +68,41 @@ namespace CpmDemoApp.Controllers
             return RedirectToAction("Index");
         }
 
+
+        public ActionResult AddPage(string id) 
+        {
+            return View("AddPage", id);
+        }
+
         [Route("AddEmployee")]
         [HttpPost]
-        public ActionResult AddEmployee(Item item)
+        public async Task<ActionResult> AddEmployee(string id, List<string> SelectedAgentIds)
         {
-            return RedirectToAction("Index");
+            var payload = new RemoveEmployeesRequestPayload();
+
+            foreach (var id in AgentIds)
+            {
+            }
+            var result = await LiveChat.ConversationManagementClient.RemoveAsync("", payload);
+            return View("Result", "");
+        }
+
+        public ActionResult RemovePage(string id)
+        {
+            var conversationModel = new Conversation()
+            {
+                Id = "2323",
+                IncomingMessage = new Message { From = "+2323", MessageContent = "hello message 2" },
+                SelectedAgentIds = new List<string> { "00", "11" }
+            };
+            return View("RemoveEmployee", conversationModel);
         }
 
         [Route("RemoveEmployee")]
         [HttpPost]
-        public ActionResult RemoveEmployee(Item item)
+        public ActionResult RemoveEmployee(string id, List<string> SelectedAgentIds)
         {
-            return RedirectToAction("Index");
+            return View("Result", "");
         }
     }
 }

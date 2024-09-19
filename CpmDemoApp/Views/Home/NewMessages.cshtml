@@ -1,0 +1,87 @@
+﻿<body>
+    <div class="filter-container">
+        <label for="typeFilter">Filter by Intent:</label>
+        <select id="typeFilter" onchange="filterIncomingMessages()">
+            <option value="">All</option>
+            <option value="order">Order</option>
+            <option value="reviews">Reviews</option>
+        </select>
+    </div>
+    <div id="inbox"></div>
+
+    <script type="text/javascript">
+        var incomingMessages = JSON.parse('@Html.Raw(Json.Serialize(LiveChat.NewIncomingMessagesListStatic))');
+        console.log(incomingMessages);
+
+        function groupIncomingMessagesByDate(incomingMessages) {
+            if (!Array.isArray(incomingMessages)) {
+                console.error("incomingMessages is not an array");
+                return {};
+            }
+            return incomingMessages.reduce((groups, message) => {
+                const date = message.arrivalTime.split('T'); // Assuming ArrivalTime is in ISO format
+                if (!groups[date]) {
+                    groups[date] = [];
+                }
+                groups[date].push(message);
+                return groups;
+            }, {});
+        }
+
+        function displayIncomingMessages(incomingMessages) {
+            const inbox = document.getElementById('inbox');
+            inbox.innerHTML = '';
+            const groupedMessages = groupIncomingMessagesByDate(incomingMessages);
+            for (const date in groupedMessages) {
+                const messageGroup = document.createElement('div');
+                messageGroup.className = 'message-group';
+                const dateHeader = document.createElement('h3');
+                dateHeader.textContent = dateFormat(date);
+                messageGroup.appendChild(dateHeader);
+                const messageList = document.createElement('ul');
+                messageList.id = 'inbox';
+                groupedMessages[date].forEach(message => {
+                    console.log(message)
+                    const messageItem = document.createElement('li');
+                    messageItem.className = 'message-item';
+                    // const url = `@Html.Raw(Url.Action("CreateForm", "ConversationManagement", new { From = "__FROM__", MessageContent = "__MESSAGECONTENT__" }))`
+                    //     .replace("__FROM__", message.customerPhoneNumber)
+                    //     .replace("__MESSAGECONTENT__", message.messageContent);
+                    const url = `@Html.Raw(Url.Action("CreateForm", "ConversationManagement", new { From = "__FROM__", MessageContent = "__MESSAGECONTENT__" }))`
+                        .replace("__FROM__", message.customerPhoneNumber)
+                        .replace("__MESSAGECONTENT__", message.messageContent);
+                    messageItem.innerHTML = `<a href="${url}">
+                            From: ${message.customerPhoneNumber} <br>
+                            ${message.messageContent} <br>
+                            Analysis - ${message.analysisKeyword} <br>
+                            Intent Analysis - ${message.analysis.IntentAnalysis}
+                        </a>`;
+                    messageList.appendChild(messageItem);
+                });
+
+                messageGroup.appendChild(messageList);
+                inbox.appendChild(messageGroup);
+            }
+        }
+
+        function dateFormat(dateStr) {
+            const date = new Date(dateStr);
+            const options = { year: 'numeric', month: 'short', day: '2-digit' };
+            const formattedDate = date.toLocaleDateString('en-US', options);
+            console.log(formattedDate); // Output: "Sep 12, 2024"
+            return formattedDate;
+        }
+
+        function filterIncomingMessages() {
+            const typeFilter = document.getElementById('typeFilter').value;
+            const filteredMessages = incomingMessages.filter(message => {
+                return (!typeFilter || message.analysisKeyword === typeFilter);
+            });
+            displayIncomingMessages(filteredMessages);
+        }
+
+
+        // Initial display
+        displayIncomingMessages(incomingMessages);
+    </script>
+</body>
